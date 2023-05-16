@@ -12,6 +12,6 @@ interface QRMaker {
     @Service
     class SimpleQRMaker : QRMaker {
         override fun make(url: String, outputStream: ServletOutputStream) =
-            QRCode.make(url, outputStream)
+            QRCode(url).create(outputStream)
     }
 }

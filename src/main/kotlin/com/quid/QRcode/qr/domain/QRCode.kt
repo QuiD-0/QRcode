@@ -5,13 +5,11 @@ import com.google.zxing.MultiFormatWriter
 import com.google.zxing.client.j2se.MatrixToImageWriter
 import javax.servlet.ServletOutputStream
 
-class QRCode {
-    companion object {
-        fun make(contents: String, outputStream: ServletOutputStream) {
-            MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, 200, 200).let {
-                MatrixToImageWriter.writeToStream(it, "PNG", outputStream)
-                outputStream.flush()
-            }
+class QRCode(private val content: String) {
+    fun create(outputStream: ServletOutputStream) {
+        MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, 200, 200).let {
+            MatrixToImageWriter.writeToStream(it, "PNG", outputStream)
+            outputStream.flush()
         }
     }
 }
