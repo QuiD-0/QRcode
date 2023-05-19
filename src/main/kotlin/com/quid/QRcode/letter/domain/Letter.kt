@@ -10,8 +10,8 @@ class Letter(
     val regDate: LocalDate,
     val id : String? = null,
 ) {
-    fun toUrl(): String {
-        return "http://130.162.136.116/letter/$id"
+    fun toUrl(domain: String): String {
+        return "$domain/letter/$id"
     }
 
     init {
