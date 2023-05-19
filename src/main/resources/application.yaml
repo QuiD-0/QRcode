@@ -1,1 +1,16 @@
+spring:
+  application:
+    name: qr
+  profiles:
+    active: local
+  config:
+    import: optional:configserver:http://130.162.136.116:8888
 
+---
+spring:
+  application:
+    name: qr
+  profiles:
+    active: prod
+  config:
+    import: optional:configserver:http://130.162.136.116:8888

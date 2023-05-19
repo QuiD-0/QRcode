@@ -16,8 +16,9 @@ interface LetterService {
     @Transactional
     class LetterServiceImpl(private val letterRepository: LetterRepository,
         private val qr: QRMaker) : LetterService {
+
         @Value("\${domain}")
-        private val domain = "http://localhost:8080"
+        private lateinit var domain: String
 
         override fun makeQR(letter: Letter, outputStream: ServletOutputStream) {
             letterRepository.save(letter).let {
