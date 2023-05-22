@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <title>Document</title>
 </head>
 <body style="width: 800px; margin: 0 auto">
@@ -17,19 +16,14 @@
       <div class="col-12">
         <ul class="nav nav-tabs">
           <li class="nav-item col-6">
-            <a class="nav-link active" aria-current="page" href="/">QR Code</a>
+            <a class="nav-link" href="/">QR Code</a>
           </li>
           <li class="nav-item col-6">
-            <a class="nav-link" href="/letter.html">QR Letter</a>
+            <a class="nav-link active" aria-current="page" href="/letter.html">QR Letter</a>
           </li>
         </ul>
-        <div style="margin: 50px">
-          <label for="url">QR코드로 만들고자하는 url을 입력하세요</label>
-          <br>
-          <input type="text" id="url" v-model="url">
-          <button type="button" class="btn btn-primary" @click="makeQr()">QR코드 생성</button>
-        </div>
-        <div id="result">
+        <div>
+          내용무
         </div>
       </div>
     </div>
@@ -40,18 +34,7 @@
   new Vue({
     el: '#app',
     data: {
-      url: ""
-    },
-    methods: {
-      makeQr: function () {
-        axios.post('http://localhost:8080/qr/url', {
-          url: this.url
-        }).then(function (response) {
-          console.log(response)
-        }).catch(function (error) {
-          console.log(error);
-        });
-      }
+      message: 'Hello Vue.js!'
     }
   })
 </script>
