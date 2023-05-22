@@ -39,15 +39,19 @@
 <script>
   new Vue({
     el: '#app',
-    data: {
-      url: ""
+    data() {
+      return {
+          url: '',
+      }
     },
     methods: {
       makeQr: function () {
         axios.post('http://localhost:8080/qr/url', {
           url: this.url
-        }).then(function (response) {
-          console.log(response)
+        },{responseType : 'blob'}).then(function (response) {
+            let blob = new Blob([response.data], {type: 'image/png'});
+            let data = window.URL.createObjectURL(blob);
+          document.getElementById('result').innerHTML = "<img src='" + data + "' alt='QR'/>";
         }).catch(function (error) {
           console.log(error);
         });
