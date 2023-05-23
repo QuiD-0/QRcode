@@ -43,7 +43,9 @@
                 <textarea class="form-control" id="content" rows="10" placeholder="내용을 입력하세요" v-model="content"></textarea>
             </div>
             <button class="btn btn-primary" @click="send()">전송</button>
-            <div id="result"></div>
+          <div id="result">
+            <img :src="qrCode" alt="QR" v-if="qrCode !== ''">
+          </div>
         </div>
       </div>
     </div>
@@ -58,32 +60,33 @@
             sender: '',
             receiver: '',
             title: '',
-            content: ''
+            content: '',
+          qrCode: '',
         }
     },
       methods:{
-        send(){
-            let param = {
-                sender: this.sender,
-                receiver: this.receiver,
-                title: this.title,
-                content: this.content
-            }
-            axios.post('/letter', param, {responseType: 'blob'})
-                .then((response) => {
-                    let blob = new Blob([response.data], {type: 'image/png'});
-                    let data = window.URL.createObjectURL(blob);
-                    document.getElementById('result').innerHTML = "<img src='" + data + "' alt='QR'/>";
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-                .finally(() => {
-                    this.sender = ''
-                    this.receiver = ''
-                    this.title = ''
-                    this.content = ''
-                })
+        send() {
+          let self = this;
+          let param = {
+            sender: this.sender,
+            receiver: this.receiver,
+            title: this.title,
+            content: this.content
+          }
+          axios.post('/letter', param, {responseType: 'blob'})
+          .then((response) => {
+            let blob = new Blob([response.data], {type: 'image/png'});
+            self.qrCode = window.URL.createObjectURL(blob);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+          .finally(() => {
+            this.sender = ''
+            this.receiver = ''
+            this.title = ''
+            this.content = ''
+          })
         }
       }
   })

@@ -30,6 +30,7 @@
           <button type="button" class="btn btn-primary" @click="makeQr()">QR코드 생성</button>
         </div>
         <div id="result">
+          <img :src="qrCode" alt="QR" v-if="qrCode !== ''">
         </div>
       </div>
     </div>
@@ -41,17 +42,18 @@
     el: '#app',
     data() {
       return {
-          url: '',
+          url: "",
+          qrCode: "",
       }
     },
     methods: {
       makeQr: function () {
+        let self = this;
         axios.post('http://localhost:8080/qr/url', {
           url: this.url
         },{responseType : 'blob'}).then(function (response) {
             let blob = new Blob([response.data], {type: 'image/png'});
-            let data = window.URL.createObjectURL(blob);
-          document.getElementById('result').innerHTML = "<img src='" + data + "' alt='QR'/>";
+            self.qrCode = window.URL.createObjectURL(blob);
         }).catch(function (error) {
           console.log(error);
         });
