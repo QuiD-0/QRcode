@@ -1,4 +1,4 @@
-package com.quid.QRcode.letter.service
+package com.quid.QRcode.letter.usecase
 
 import com.quid.QRcode.letter.domain.Letter
 import com.quid.QRcode.letter.gateway.repository.LetterRepository
@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import javax.servlet.ServletOutputStream
 
-interface LetterService {
+interface LetterCreate {
     fun makeQR(letter: Letter, outputStream: ServletOutputStream)
-    fun readLetter(id: String): Letter
 
     @Service
     @Transactional
-    class LetterServiceImpl(private val letterRepository: LetterRepository,
-        private val qr: QRMaker) : LetterService {
+    class LetterCreateImpl(
+        private val letterRepository: LetterRepository,
+        private val qr: QRMaker,
+    ) : LetterCreate {
 
         @Value("\${domain}")
         private lateinit var domain: String
@@ -24,10 +25,6 @@ interface LetterService {
             letterRepository.save(letter).let {
                 qr.make(it.toUrl(domain), outputStream)
             }
-        }
-
-        override fun readLetter(id: String): Letter {
-            return letterRepository.findById(id)
         }
     }
 }
