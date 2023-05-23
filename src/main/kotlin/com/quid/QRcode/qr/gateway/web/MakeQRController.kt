@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/qr")
-class MakeQRController(private val qrMaker: QRMaker) {
-
+class MakeQRController(
+    private val qrMaker: QRMaker
+) {
     @PostMapping("/url")
     fun makeQR(@RequestBody request: UrlCreateRequest, response: HttpServletResponse) {
         qrMaker.make(request.url, response.outputStream)

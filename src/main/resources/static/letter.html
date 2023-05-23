@@ -6,7 +6,8 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <title>Document</title>
 </head>
@@ -24,26 +25,30 @@
           </li>
         </ul>
         <div>
-            <div style="margin: 50px"></div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="sender">보내는 사람</label>
-                    <input type="text" class="form-control" id="sender" placeholder="보내는 사람" v-model="sender">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="receiver">받는 사람</label>
-                    <input type="text" class="form-control" id="receiver" placeholder="받는사람" v-model="receiver">
-                </div>
+          <div style="margin: 50px"></div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="sender">보내는 사람</label>
+              <input type="text" class="form-control" id="sender" placeholder="보내는 사람"
+                     v-model="sender">
             </div>
-            <div class="form-group">
-                <label for="title">제목</label>
-                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" v-model="title">
+            <div class="form-group col-md-6">
+              <label for="receiver">받는 사람</label>
+              <input type="text" class="form-control" id="receiver" placeholder="받는사람"
+                     v-model="receiver">
             </div>
-            <div class="form-group">
-                <label for="content">내용</label>
-                <textarea class="form-control" id="content" rows="10" placeholder="내용을 입력하세요" v-model="content"></textarea>
-            </div>
-            <button class="btn btn-primary" @click="send">전송</button>
+          </div>
+          <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요"
+                   v-model="title">
+          </div>
+          <div class="form-group">
+            <label for="content">내용</label>
+            <textarea class="form-control" id="content" rows="10" placeholder="내용을 입력하세요"
+                      v-model="content"></textarea>
+          </div>
+          <button class="btn btn-primary" @click="send">전송</button>
           <div id="result">
             <img :src="qrCode" alt="QR" v-if="qrCode !== ''">
           </div>
@@ -56,40 +61,40 @@
 <script>
   new Vue({
     el: '#app',
-    data(){
-        return {
-            sender: '',
-            receiver: '',
-            title: '',
-            content: '',
-          qrCode: '',
-        }
-    },
-      methods:{
-        send() {
-          let self = this;
-          let param = {
-            sender: this.sender,
-            receiver: this.receiver,
-            title: this.title,
-            content: this.content
-          }
-          axios.post('/letter/write', param, {responseType: 'blob'})
-          .then((response) => {
-            let blob = new Blob([response.data], {type: 'image/png'});
-            self.qrCode = window.URL.createObjectURL(blob);
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-          .finally(() => {
-            this.sender = ''
-            this.receiver = ''
-            this.title = ''
-            this.content = ''
-          })
-        }
+    data() {
+      return {
+        sender: '',
+        receiver: '',
+        title: '',
+        content: '',
+        qrCode: '',
       }
+    },
+    methods: {
+      send() {
+        let self = this;
+        let param = {
+          sender: this.sender,
+          receiver: this.receiver,
+          title: this.title,
+          content: this.content
+        }
+        axios.post('/letter/write', param, {responseType: 'blob'})
+        .then((response) => {
+          let blob = new Blob([response.data], {type: 'image/png'});
+          self.qrCode = window.URL.createObjectURL(blob);
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => {
+          this.sender = ''
+          this.receiver = ''
+          this.title = ''
+          this.content = ''
+        })
+      }
+    }
   })
 </script>
 </html>

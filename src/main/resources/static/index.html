@@ -6,7 +6,8 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <title>Document</title>
 </head>
@@ -42,8 +43,8 @@
     el: '#app',
     data() {
       return {
-          url: "",
-          qrCode: "",
+        url: "",
+        qrCode: "",
       }
     },
     methods: {
@@ -51,9 +52,9 @@
         let self = this;
         axios.post('http://localhost:8080/qr/url', {
           url: this.url
-        },{responseType : 'blob'}).then(function (response) {
-            let blob = new Blob([response.data], {type: 'image/png'});
-            self.qrCode = window.URL.createObjectURL(blob);
+        }, {responseType: 'blob'}).then(function (response) {
+          let blob = new Blob([response.data], {type: 'image/png'});
+          self.qrCode = window.URL.createObjectURL(blob);
         }).catch(function (error) {
           console.log(error);
         });
