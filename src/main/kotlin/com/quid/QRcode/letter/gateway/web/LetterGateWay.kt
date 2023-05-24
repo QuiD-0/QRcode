@@ -17,7 +17,7 @@ class LetterGateWay(
 
     @PostMapping("/write")
     fun writeLetter(@RequestBody request: LetterCreateRequest, outputStream: ServletOutputStream) =
-        createLetter.makeQR(request.toLetter(), outputStream)
+        createLetter.makeQr(request.toLetter(), outputStream)
 
     @GetMapping("/{id}")
     fun readLetter(@PathVariable id: String) : LetterResponse = letterResponse(readLetter.by(id))

@@ -1,18 +1,16 @@
 package com.quid.QRcode.qr.gateway.web
 
+import com.quid.QRcode.qr.domain.QRCode
 import com.quid.QRcode.qr.gateway.web.dto.UrlCreateRequest
-import com.quid.QRcode.qr.usecase.QRMaker
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/qr")
-class MakeQRController(
-    private val qrMaker: QRMaker
-) {
+class MakeQRController {
     @PostMapping("/url")
     fun makeQR(@RequestBody request: UrlCreateRequest, response: HttpServletResponse) {
-        qrMaker.make(request.url, response.outputStream)
+        QRCode(request.url).download(response.outputStream)
     }
 
 }
