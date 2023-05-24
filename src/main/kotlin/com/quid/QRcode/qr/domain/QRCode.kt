@@ -14,10 +14,11 @@ class QRCode(
     private val logger = LoggerFactory.getLogger(QRCode::class.java)
 
     init {
-        this.create()
+        require(content.isNotBlank()) { "content must not be blank" }
+        generate()
     }
 
-    private fun create(): QRCode =
+    private fun generate() =
         this.apply { matrix = MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, 200, 200) }
             .also { logger.info("QRCode created $content") }
 
